@@ -2,13 +2,9 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import axios from 'axios';
 import { ScatterChart, Scatter, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
-import { run_mongo } from './mongo_connection';
-import { run_redis } from './redis_connection';
-
 const App = () => {
 
-     run_mongo();
-     run_redis();
+
     const [xMin, setXMin] = useState('');
     const [xMax, setXMax] = useState('');
     const [yMin, setYMin] = useState('');

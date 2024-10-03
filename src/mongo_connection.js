@@ -11,7 +11,6 @@ app.use(express.json());
 const clientOptions = {
   serverApi: { version: '1', strict: true, deprecationErrors: true }
 };
-export function run_mongo(){
 async function run() {
   try {
     await mongoose.connect(process.env.MONGO_URI, clientOptions);
@@ -43,4 +42,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-}

@@ -7,7 +7,6 @@ dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
-export function run_redis(){
 const client = createClient({
     password: process.env.REDIS_PASSWORD,
     socket: {
@@ -39,4 +38,3 @@ const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
-}
