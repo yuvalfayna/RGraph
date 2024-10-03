@@ -1,12 +1,13 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import dotenv from 'dotenv';
 
+dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-const uri = process.env.MONGO_URI;
 
 const clientOptions = {
   serverApi: { version: '1', strict: true, deprecationErrors: true }
@@ -14,7 +15,7 @@ const clientOptions = {
 
 async function run() {
   try {
-    await mongoose.connect(uri, clientOptions);
+    await mongoose.connect(process.env.MONGO_URI, clientOptions);
     console.log("Connected to MongoDB via Mongoose!");
   } catch (error) {
     console.error("Failed to connect to MongoDB:", error);
