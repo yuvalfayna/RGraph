@@ -25,17 +25,18 @@ client.on('error', (err) => console.log('Redis Client Error', err));
 
 app.get('/data', async (req, res) => {
     try {
-        const keys= await client.keys("*random*");
-        const jdata=await Promise.all(keys.map((id)=>client.get(id)));
-        const data= await Promise.all(jdata.map(item => JSON.parse(item)[0]));
-        res.json({ data })
-        } catch (err) {
+        const keys = await client.keys("*random*");
+        const jdata = await Promise.all(keys.map((id) => client.get(id)));
+        const data = await Promise.all(jdata.map(item => JSON.parse(item)[0]));
+        res.json({ data });
+    } catch (err) {
         console.error('Error fetching from Redis:', err);
         res.status(500).send('Server error');
     }
 });
-const url = "https://rgraph.onrender.com/data";
-app.listen(url, () => {
-    console.log(`Server running on port ${url}`);
-});
 
+// Use the PORT environment variable or default to port 3000
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});

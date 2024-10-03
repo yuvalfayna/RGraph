@@ -8,7 +8,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
 const clientOptions = {
   serverApi: { version: '1', strict: true, deprecationErrors: true }
 };
@@ -29,7 +28,6 @@ const entitySchema = new mongoose.Schema({
 });
 const Entity = mongoose.model('arrays', entitySchema);
 
-
 app.get('/array', async (req, res) => {
   try {
     const entities = await Entity.find(); 
@@ -40,7 +38,8 @@ app.get('/array', async (req, res) => {
   }
 });
 
-const url = "https://rgraph.onrender.com/array";
-app.listen(url, () => {
-  console.log(`Server running on url ${url}`);
+// Use the PORT environment variable or default to port 3000
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

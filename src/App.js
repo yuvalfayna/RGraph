@@ -121,7 +121,7 @@ const App = () => {
     };
 
     useEffect(() => {
-        axios.get('https://rgraph.onrender.com/api/array')
+        axios.get('https://rgraph.onrender.com/array')
             .then((response) => {
                 setEntities(response.data.entities);
             })
