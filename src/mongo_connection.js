@@ -40,7 +40,7 @@ app.get('/array', async (req, res) => {
   }
 });
 
-const port = 5001;
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+const url = "https://rgraph.onrender.com/array";
+app.listen(url, () => {
+  console.log(`Server running on url ${url}`);
 });

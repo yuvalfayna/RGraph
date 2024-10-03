@@ -34,8 +34,8 @@ app.get('/data', async (req, res) => {
         res.status(500).send('Server error');
     }
 });
-const port = 5000;
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+const url = "https://rgraph.onrender.com/data";
+app.listen(url, () => {
+    console.log(`Server running on port ${url}`);
 });
 
