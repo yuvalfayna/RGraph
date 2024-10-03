@@ -93,7 +93,7 @@ const App = () => {
                 parseInt(timeMax),
             ];
 
-            const response = await axios.post('http://localhost:8080/api/settings', arr);
+            const response = await axios.post('https://rgraphbackend.onrender.com/api/settings', arr);
             console.log('Response from backend:', response.data);
 
             setData([]); // Clear the current data on successful response
