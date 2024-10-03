@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const uri = "mongodb+srv://yovalfayna98:lPpAMaj1wiYxSIoH@mdb.t9lvb.mongodb.net/RGraph?retryWrites=true&w=majority&appName=MDB";
+const uri = process.env.MONGO_URI;
 
 const clientOptions = {
   serverApi: { version: '1', strict: true, deprecationErrors: true }

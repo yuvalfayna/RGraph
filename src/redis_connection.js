@@ -2,16 +2,15 @@ import { createClient } from 'redis';
 import express from 'express';
 import cors from 'cors';
 
-// Create the Express app
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 const client = createClient({
-    password: 'p7LS233UJKNl8F4eCSrb8OSWnluC9MLB',
+    password: process.env.REDIS_PASSWORD,
     socket: {
-        host: 'redis-19666.c16.us-east-1-3.ec2.redns.redis-cloud.com',
-        port: 19666
+        host: process.env.REDIS_HOST,
+        port: process.env.REDIS_PORT
     }
 });
 client.on('error', (err) => console.log('Redis Client Error', err));
