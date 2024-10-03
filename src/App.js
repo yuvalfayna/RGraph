@@ -107,7 +107,7 @@ const App = () => {
             setError('Error posting data: ' + (error.response?.data || error.message));
         } finally {
             setLoading(false);
-            axios.get('https://rgraph.onrender.com/data')
+            axios.get('https://dbconnectins.onrender.com/data')
                 .then((response) => {
                     setData(response.data.data);
                 })
@@ -115,7 +115,7 @@ const App = () => {
                     console.error('Error fetching data:', error);
                 });
         }
-            axios.get('https://rgraph.onrender.com/array')
+            axios.get('https://dbconnectins.onrender.com/array')
                 .then((response) => {
                     setEntities(response.data.entities);
                 })
@@ -126,7 +126,7 @@ const App = () => {
     };
 
     useEffect(() => {
-        axios.get('https://rgraph.onrender.com/array')
+        axios.get('https://dbconnectins.onrender.com/array')
             .then((response) => {
                 setEntities(response.data.entities);
             })
