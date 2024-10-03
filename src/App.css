@@ -1,38 +1,202 @@
-.App {
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the left */
+  padding: 20px;
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); /* Gradient background */
+  min-height: 100vh; /* To ensure the app takes the full height */
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); /* Gradient background */
+
+}
+
+h1 {
+  color: #2b3a4a; /* Title color */
+  font-size: 4.5em; /* Larger title */
+  margin: 20px 0 0; /* Adjust top margin as needed */
+  text-align: center; /* Center the title text */
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  position: relative; /* Required for positioning */
+  right: -700px; /* Adjust this value to move the text up */
+}
+
+
+.horizontal-container {
+  display: flex;
+  justify-content: flex-start; /* Align items to the left */
+  width: 100%; /* 100% to prevent scrolling */
+  max-width: 1200px; /* Max width for the container */
+  margin-top: 10px; /* Margin above the container */
+  padding: 20px 0; /* Adjust padding */
+}
+
+.input-container,
+.data-table-container,
+.scroll-container {
+  flex: 1; /* Allow containers to take up available space */
+  min-width: 250px; /* Set a minimum width to make them bigger */
+  margin: 0 10px; /* Space between containers */
+  padding: 50px;
+  border-radius: 10px;
+  height: 500px; /* Increased height for the containers */
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Shadow for depth */
+  transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition */
+  text-align: center; /* Center text inside containers */
+}
+
+/* Set fixed height and enable scrolling for the MongoDB container */
+.scroll-container {
+  width: 400px; /* Set fixed width */
+  height: 580px; /* Set a fixed height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  border: 1px solid #ccc; /* Add a border for better visibility */
+  padding: 10px; /* Inner padding */
+}
+
+.chart-container {
+  flex: 2; /* Make the chart container take up more space */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px; /* Height for the graph */
+  width: 100%; /* Maintain full width */
+  background-color: rgba(227, 255, 244, 0.8); /* Semi-transparent background for the graph */
+  border-radius: 10px; /* Rounded corners for the chart */
+  padding: 50px; /* Padding around the chart */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Shadow for depth */
+}
+
+.input-container:hover,
+.data-table-container:hover,
+.chart-container:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+}
+
+.input-container h2,
+.data-table-container h2,
+.chart-container h2,
+.scroll-container h2 {
+  margin-bottom: 15px;
+  color: #1976d2; /* Header color */
+  font-size: 1.5em; /* Slightly larger headers */
+  text-transform: uppercase; /* Uppercase headers */
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #2b3a4a; /* Label color */
+}
+
+.input-group input {
+  padding: 10px;
+  border: 1px solid #90caf9; /* Light border color */
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s; /* Smooth border transition */
+}
+
+.input-group input:focus {
+  border-color: #1976d2; /* Border color when focused */
+  outline: none; /* Remove default outline */
+}
+
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background: linear-gradient(45deg, #1976d2, #0d47a1); /* Gradient background for button */
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+}
+
+button:hover {
+  background: linear-gradient(45deg, #0d47a1, #1976d2); /* Darker gradient on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px; /* Rounded corners for the table */
+  overflow: hidden; /* Ensure corners are rounded */
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid #90caf9; /* Light border color */
+  padding: 12px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.data-table th {
+  background: linear-gradient(45deg, #1976d2, #0d47a1); /* Gradient for header */
+  color: white; /* Text color for header */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.data-table tr:nth-child(even) {
+  background-color: #f1f1f1; /* Zebra striping for even rows */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Other styles remain unchanged */
+
+.entity-item {
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Style for the locked state */
+.lock-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  z-index: 10; /* Ensure it's above the form */
 }
 
-.App-link {
-  color: #61dafb;
+.locked-message {
+  position: absolute;
+  top: -100px; /* Position above the inputs */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffdddd;
+  color: #d8000c;
+  padding: 10px;
+  border: 2px solid #d8000c;
+  border-radius: 8px;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  z-index: 10; /* Ensure it's on top of the blur */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Blurred effect for the container when locked */
+.locked {
+  filter: blur(5px);
+  pointer-events: none; /* Prevent interactions with blurred inputs */
+  position: relative; /* To allow absolute positioning of the lock message */
+}
+
+.input-container.locked {
+  filter: blur(0.1px) grayscale(1%);
+  pointer-events: none; /* Prevent interaction */
+  position: relative; /* To keep overlay on top */
 }
