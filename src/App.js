@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import axios from 'axios';
 import { ScatterChart, Scatter, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
+import './mongo_connection.js';  
+import './redis_connection.js';  
+
 const App = () => {
 
 
