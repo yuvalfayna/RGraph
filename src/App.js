@@ -107,7 +107,7 @@ const App = () => {
             setError('Error posting data: ' + (error.response?.data || error.message));
         } finally {
             setLoading(false);
-            axios.get('https://dbconnectins.onrender.com/data')
+            axios.get('https://dbconnectionsredis.onrender.com/data')
                 .then((response) => {
                     setData(response.data.data);
                 })
