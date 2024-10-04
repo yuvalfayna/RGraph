@@ -191,14 +191,7 @@ const App = () => {
                 </div>
                 <div className="scroll-container">
         <h2>Replay</h2>
-            {entities
-                .slice()
-                .sort((a, b) => {
-                    const dateA = new Date(a["runtime:"].split('-').reverse().join('-'));
-                    const dateB = new Date(b["runtime:"].split('-').reverse().join('-'));
-                    return dateB - dateA;
-                })
-                .map((entity) => (
+            {entities.map((entity) => (
                     <button
                         key={entity._id}
                         className="entity-item"
