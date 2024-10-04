@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "RGraph",
+  "name": "Random Graph For You",
   "icons": [
     {
       "src": "favicon.ico",
