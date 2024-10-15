@@ -107,7 +107,7 @@ const App = () => {
                 parseInt(timeMax),
             ];
 
-            const response = await axios.post('https://rgraphbackend.onrender.com/api/settings', arr);
+            const response = await axios.post('http://13.60.25.68:8080/settings', arr);
             console.log('Response from backend:', response.data);
 
             setData([]);
@@ -117,7 +117,7 @@ const App = () => {
         } finally {
             setLoading(false);
             setRuntime(format(new Date(),'dd/MM/yyyy HH:mm:ss'));
-            axios.get('https://dbconnectionsredis.onrender.com/data')
+            axios.get('http://13.60.25.68:6379/data')
                 .then((response) => {
                     setData(response.data.data);
                     setDataarr(response.data.jarrdata);
@@ -126,7 +126,7 @@ const App = () => {
                     console.error('Error fetching data:', error);
                 });
         }
-            axios.get('https://dbconnectins.onrender.com/array')
+            axios.get('http://13.60.25.68:27017/array')
                 .then((response) => {
                     setEntities(response.data.entities);
                 })
@@ -136,7 +136,7 @@ const App = () => {
     };
 
     useEffect(() => {
-        axios.get('https://dbconnectins.onrender.com/array')
+        axios.get('http://13.60.25.68:27017/array')
             .then((response) => {
                 setEntities(response.data.entities);
             })
