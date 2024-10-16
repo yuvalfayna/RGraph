@@ -107,7 +107,7 @@ const App = () => {
                 parseInt(timeMax),
             ];
 
-            const response = await axios.post('http://16.170.5.43:8080/settings', arr);
+            const response = await axios.post('http://16.170.5.43:8080/api/settings', arr);
             console.log('Response from backend:', response.data);
 
             setData([]);
