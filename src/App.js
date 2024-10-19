@@ -136,13 +136,21 @@ const App = () => {
     };
 
     useEffect(() => {
-        axios.get('http://16.170.5.43:27017/array')
-            .then((response) => {
-                setEntities(response.data.entities);
-            })
-            .catch((error) => {
-                console.error('Error fetching entities:', error);
-            });
+        const fetchEntities = () => {
+            axios.get('http://16.170.5.43:27017/array')
+                .then((response) => {
+                    setEntities(response.data.entities);
+                })
+                .catch((error) => {
+                    console.error('Error fetching entities:', error);
+                });
+        };
+
+        fetchEntities();
+
+        const intervalId = setInterval(fetchEntities, 2000);
+
+        return () => clearInterval(intervalId);
     }, []);
 
     const fetchDataMongo = async (arr) => {
