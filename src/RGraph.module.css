@@ -1,0 +1,362 @@
+.app_container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the left */
+  padding: 20px;
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); /* Gradient background */
+  min-height: 100vh; /* To ensure the app takes the full height */
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  color: #2e2d2d; /* Title color */
+  font-size: 4.5em; /* Larger title */
+  margin: 0.5px 0 0; /* Adjust top margin as needed */
+  text-align: center; /* Center the title text */
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  position: relative; /* Required for positioning */
+  right: -700px; /* Adjust this value to move the text up */
+}
+
+
+.horizontal_container {
+  display: flex;
+  justify-content: flex-start; /* Align items to the left */
+  width: 100%; /* 100% to prevent scrolling */
+  max-width: 1200px; /* Max width for the container */
+  margin-top: 10px; /* Margin above the container */
+  padding: 1px 0; /* Adjust padding */
+}
+
+.input_container,
+.data_table_container,
+.scroll_container {
+  flex: 1; /* Allow containers to take up available space */
+  min-width: 250px; /* Set a minimum width to make them bigger */
+  margin: 0 10px; /* Space between containers */
+  padding: 50px;
+  border-radius: 10px;
+  height: 500px; /* Increased height for the containers */
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Shadow for depth */
+  transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition */
+  text-align: center; /* Center text inside containers */
+}
+
+.scroll_container {
+  position: relative;
+  width: 400px; /* Set fixed width */
+  height: 200px; /* Set a fixed height */
+  border: 1px solid #ccc; /* Add a border for better visibility */
+  padding: 18px; /* Inner padding */
+
+  
+}
+
+.chart_container {
+  flex: 2; /* Make the chart container take up more space */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center; /* מרכז את התוכן בתוך הקונטיינר */
+  height: 700px; /* Height for the graph */
+  width: 100%; /* Maintain full width */
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background for the graph */
+  border-radius: 10px; /* Rounded corners for the chart */
+  padding: 50px; /* Padding around the chart */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Shadow for depth */
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto; /* מרכז את הקונטיינר */
+}
+.chart_title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+  width: 100%;
+}
+
+
+
+.input_container h2,
+.data_table_container h2{
+  margin-bottom: 15px;
+  margin-top: -22px;
+  color: #1976d2; /* Header color */
+  font-size: 1.5em; /* Slightly larger headers */
+  text-transform: uppercase; /* Uppercase headers */
+}
+.scroll_container h2{
+  position: sticky;
+  padding: 90005px;
+  top: 0;
+  z-index: 1;
+  padding: 10px; /* ריפוד לכותרת */
+  margin: 0; /* מסיר רווחים סביב הכותרת */
+  margin-bottom: 15px;
+  color: #1976d2; /* Header color */
+  text-transform: uppercase; /* Uppercase headers */
+}
+.input_group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.input_group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #2b3a4a; /* Label color */
+}
+
+.input_group input {
+  padding: 10px;
+  border: 1px solid #90caf9; /* Light border color */
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s; /* Smooth border transition */
+}
+
+.input_group input:focus {
+  border-color: #1976d2; /* Border color when focused */
+  outline: none; /* Remove default outline */
+}
+
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background: linear-gradient(45deg, #1976d2, #0d47a1); /* Gradient background for button */
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+}
+.error_message {
+  color: red; 
+  font-weight: bold; 
+  background-color: #ffe6e6; 
+  border: 1px solid red; 
+  width: 500px;
+  padding: 10px; 
+  border-radius: 5px; 
+  margin-top: -620px; 
+  margin-left: 100px;
+}
+
+button:hover {
+  background: linear-gradient(45deg, #0d47a1, #1976d2); /* Darker gradient on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+}
+.current_number_points{
+  margin-top: -5px;
+}
+.data_table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px; /* Rounded corners for the table */
+  overflow: hidden; /* Ensure corners are rounded */
+  margin-right: 25px;
+  margin-top: -8px;
+}
+
+.data_table th,
+.data_table td {
+  border: 1px solid #90caf9; /* Light border color */
+  padding: 12px;
+  text-align: center;
+}
+
+.data_table th {
+  background: linear-gradient(45deg, #1976d2, #0d47a1); /* Gradient for header */
+  color: white; /* Text color for header */
+}
+
+.data_table tr:nth-child(even) {
+  background-color: #f1f1f1; /* Zebra striping for even rows */
+}
+
+/* Other styles remain unchanged */
+
+.entity_item {
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Style for the locked state */
+.lock_overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10; /* Ensure it's above the form */
+}
+
+.locked_message {
+  position: absolute;
+  top: -100px; /* Position above the inputs */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffdddd;
+  color: #d8000c;
+  padding: 10px;
+  border: 2px solid #d8000c;
+  border-radius: 8px;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  z-index: 10; /* Ensure it's on top of the blur */
+}
+
+/* Blurred effect for the container when locked */
+.locked {
+  filter: blur(5px);
+  pointer-events: none; /* Prevent interactions with blurred inputs */
+  position: relative; /* To allow absolute positioning of the lock message */
+}
+
+.input_container.locked {
+  filter: blur(0.1px) grayscale(1%);
+  pointer-events: none; /* Prevent interaction */
+  position: relative; /* To keep overlay on top */
+}
+.horizontal_container_extended_graph {
+  display: flex;
+    justify-content: center; /* Center the container horizontally */
+    align-items: center;
+    background-color: #ffffff; /* White background for a fresh look */
+    padding: 20px;
+    border-radius: 15px; /* Round corners */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    margin-left: 8px ;
+    margin-top: -180px;
+    width: 95%; /* Full width with some padding */
+    max-width: 995px; /* Increased max width for a longer container */
+}
+
+.data_item {
+  flex: 1; /* Equal distribution */
+  text-align: center;
+  padding: 20px; /* Increased padding */
+  margin: 0 5px; /* Space between items */
+  border-radius: 10px; /* Rounded corners for items */
+  background: linear-gradient(145deg, #f0f0f0, #e0e0e0); /* Gradient background */
+  position: relative; /* For pseudo-elements */
+  overflow: hidden; /* Hide overflow */
+  min-width: 150px; /* Minimum width for equal sizing */
+  height: 100px; /* Fixed height for uniformity */
+}
+
+.data_item.wide_item {
+  flex: 2; /* Wider for combined X and Y range */
+}
+
+.label {
+  font-weight: bold;
+  color: #333; /* Dark color for readability */
+  font-size: 1.35em; /* Slightly larger label */
+  text-align: center;
+}
+
+.value {
+  color: #555; /* Lighter color for values */
+  font-size: 1.4em; /* Increased font size for values */
+  padding-top: 5px; /* Space above value */
+  text-align: center;
+}
+
+/* Add hover effect with shadow and scale */
+.data_item:hover {
+  transform: scale(1.05); /* Slightly enlarge on hover */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Darker shadow on hover */
+}
+
+/* Optional: Pseudo-element for a nice background effect */
+.data_item:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(76, 175, 80, 0.1); /* Light green overlay */
+  border-radius: 10px;
+  z-index: 0; /* Send it behind the content */
+}
+
+.data_item > * {
+  position: relative; /* Bring content above the overlay */
+  z-index: 1; /* Above the overlay */
+}
+.info_icon {
+  cursor: pointer; /* מראה שהאייקון הוא לחיץ */
+  margin-left: 5px; /* רווח בין הכותרת לאייקון */
+  color: blue; /* צבע של סימן השאלה, ניתן לשנות */
+  font-weight: bold; /* אם תרצה להדגיש */
+}
+.date_picker_container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Adds space between the date pickers */
+  margin-bottom: 20px;
+}
+
+.date_picker_container label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.date_picker_container input[type="date"] {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+.date_picker_container input[type="date"]:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.entity_item {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.entity_item:hover {
+  background-color: #0056b3;
+}
+.entity_buttons_container {
+  min-width: 270px; /* Set a minimum width to make them bigger */
+  height: 330px; /* גובה קבוע */
+  border: 1px solid #ccc; /* גבול */
+  padding: 10px; /* ריפוד פנימי */
+  margin-left: -20px;
+  background-color: white; /* צבע רקע */
+  border-radius: 10px; /* פינות מעוגלות */
+  margin-top: 35px; /* רווח בין הקונטיינרים */
+  overflow-y: auto;
+}
