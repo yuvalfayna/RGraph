@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { format } from 'date-fns';
+import { format, set } from 'date-fns';
 import { ScatterChart, Scatter, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import { Link } from 'react-router-dom';
 import styles from './RGraph.module.css';
@@ -213,6 +213,26 @@ const rowCountMessage = `Current Number of Points in The Graph: ${countRows()}`;
         return isAfterStart && isBeforeEnd;
       });
       
+      const Randomizer = () => {
+        const rXMin = Math.floor(Math.random() * 91);
+        const rXMax = Math.floor(Math.random() * (101 - rXMin)) + rXMin;
+        const rYMin = Math.floor(Math.random() * 91);
+        const rYMax = Math.floor(Math.random() * (101 - rYMin)) + rYMin;
+        const rNumPoints = Math.floor(Math.random() * 7) + 2;
+        const rTimeMin = Math.floor(Math.random() * 61) + 5;
+        const rTimeMax = Math.floor(Math.random() * (61 - rTimeMin)) + rTimeMin;
+    
+        setXMin(rXMin);
+        setXMax(rXMax);
+        setYMin(rYMin);
+        setYMax(rYMax);
+        setNumPoints(rNumPoints);
+        setTimeMin(rTimeMin);
+        setTimeMax(rTimeMax);
+    };
+    
+
+      
     return (
         <div className={styles.app_container}>
             <h1>RGraph</h1>
@@ -247,7 +267,8 @@ const rowCountMessage = `Current Number of Points in The Graph: ${countRows()}`;
                             <input type="number" placeholder="MIN" value={timeMin} onChange={(e) => setTimeMin(e.target.value)} disabled={isLocked} />
                             <input type="number" placeholder="MAX" value={timeMax} onChange={(e) => setTimeMax(e.target.value)} disabled={isLocked} />
                         </div>
-                        <button type={styles.submit} disabled={isLocked}>Submit</button>
+                        <button type="submit" disabled={isLocked} className={styles.button}>Submit</button>
+                        <button type="button" onClick={Randomizer} disabled={isLocked} className={styles.randomizer}>Randomizer</button>
                         {error && <p className={styles.error_message}>{error}</p>}
                     </form>
                 </div>
@@ -398,4 +419,5 @@ const CustomizedDot = (props) => {
         <circle cx={cx} cy={cy} r={6} fill="#2196F3" stroke="#FFF" strokeWidth={2} />
     );
 };
+
 export default RGraph;

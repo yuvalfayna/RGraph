@@ -124,7 +124,7 @@
     outline: none; /* Remove default outline */
   }
   
-  button {
+  .button {
     padding: 10px;
     border: none;
     border-radius: 5px;
@@ -133,6 +133,18 @@
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+  }
+  
+  .randomizer {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(45deg, #d28519, #0d47a1); /* Gradient background for button */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+    margin-left: 40px;
   }
   .error_message {
     color: red; 

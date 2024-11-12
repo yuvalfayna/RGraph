@@ -176,6 +176,24 @@ const RMap = () => {
 const countRows = () => {
     return data.length;
 };
+const Randomizer = () => {
+    const rLatMin = Math.random() * 170.10225756 - 85.05112878;
+    const rLatMax = Math.random() * (85.05112878 - rLatMin) + rLatMin;
+    const rLngMin = Math.random() * 360 - 180;
+    const rLngMax = Math.random() * (180 - rLngMin) + rLngMin;
+    const rNumPoints = Math.floor(Math.random() * 7) + 2;
+    const rTimeMin = Math.floor(Math.random() * 61) + 5;
+    const rTimeMax = Math.floor(Math.random() * (61 - rTimeMin)) + rTimeMin;
+
+    setLatMin(rLatMin);
+    setLatMax(rLatMax);
+    setLngMin(rLngMin);
+    setLngMax(rLngMax);
+    setNumPoints(rNumPoints);
+    setTimeMin(rTimeMin);
+    setTimeMax(rTimeMax);
+};
+
 
 const rowCountMessage = `Current Number of Points in The Map: ${countRows()}`;
     const isLocked = data.length > 0;
@@ -237,8 +255,8 @@ const rowCountMessage = `Current Number of Points in The Map: ${countRows()}`;
                             <input type="number" placeholder="MIN" value={timeMin} onChange={(e) => setTimeMin(e.target.value)} disabled={isLocked} />
                             <input type="number" placeholder="MAX" value={timeMax} onChange={(e) => setTimeMax(e.target.value)} disabled={isLocked} />
                         </div>
-                        <button type="submit" disabled={isLocked}>Submit</button>
-                        {error && <p className={styles.error_message}>{error}</p>}
+                        <button type="submit" disabled={isLocked} className={styles.button}>Submit</button>
+                        <button type="button" onClick={Randomizer} disabled={isLocked} className={styles.randomizer}>Randomizer</button>                        {error && <p className={styles.error_message}>{error}</p>}
                     </form>
                 </div>
                 
