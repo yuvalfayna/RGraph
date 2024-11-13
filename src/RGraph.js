@@ -215,9 +215,9 @@ const rowCountMessage = `Current Number of Points in The Graph: ${countRows()}`;
       
       const Randomizer = () => {
         const rXMin = Math.floor(Math.random() * 91);
-        const rXMax = Math.floor(Math.random() * (101 - rXMin)) + rXMin;
+        const rXMax = Math.floor(Math.random() * (101 - rXMin - 10)) + rXMin + 10;
         const rYMin = Math.floor(Math.random() * 91);
-        const rYMax = Math.floor(Math.random() * (101 - rYMin)) + rYMin;
+        const rYMax = Math.floor(Math.random() * (101 - rYMin - 10)) + rYMin + 10;
         const rNumPoints = Math.floor(Math.random() * 7) + 2;
         const rTimeMin = Math.floor(Math.random() * 61) + 5;
         const rTimeMax = Math.floor(Math.random() * (61 - rTimeMin)) + rTimeMin;
