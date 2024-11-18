@@ -66,7 +66,7 @@ const RGraph = () => {
         const timeMinNum = parseInt(timeMin);
         const timeMaxNum = parseInt(timeMax);
 
-        if (!xMin || !xMax || !yMin || !yMax || !numPoints || !timeMin || !timeMax) {
+        if (xMin == null || xMax == null || yMin == null || yMax == null || numPoints == null || timeMin == null || timeMax == null) {
             setError('All fields are required. Please fill in all values');
             return;
         }
@@ -219,8 +219,8 @@ const rowCountMessage = `Current Number of Points in The Graph: ${countRows()}`;
         const rYMin = Math.floor(Math.random() * 91);
         const rYMax = Math.floor(Math.random() * (101 - rYMin - 10)) + rYMin + 10;
         const rNumPoints = Math.floor(Math.random() * 7) + 2;
-        const rTimeMin = Math.floor(Math.random() * 61) + 5;
-        const rTimeMax = Math.floor(Math.random() * (61 - rTimeMin)) + rTimeMin;
+        const rTimeMin = Math.floor(Math.random() * 56) + 5; 
+        const rTimeMax = Math.floor(Math.random() * (61 - rTimeMin)) + rTimeMin; 
     
         setXMin(rXMin);
         setXMax(rXMax);

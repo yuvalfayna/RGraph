@@ -67,7 +67,10 @@ const RMap = () => {
         const numPointsNum = parseInt(numPoints);
         const timeMinNum = parseInt(timeMin);
         const timeMaxNum = parseInt(timeMax);
-
+        if (LatMin == null || LatMax == null || LngMin == null || LngMax == null || numPoints == null || timeMin == null || timeMax == null) {
+            setError('All fields are required. Please fill in all values');
+            return;
+        }
         if (isNaN(LatMinNum) || isNaN(LatMaxNum) || isNaN(LngMinNum) || isNaN(LngMaxNum) ||
             isNaN(numPointsNum) || isNaN(timeMinNum) || isNaN(timeMaxNum)) {
             setError('All inputs must be valid numbers');
@@ -181,9 +184,9 @@ const Randomizer = () => {
     const rLatMax = Math.random() * (85.05112878 - rLatMin) + rLatMin;
     const rLngMin = Math.random() * 360 - 180;
     const rLngMax = Math.random() * (180 - rLngMin) + rLngMin;
-    const rNumPoints = Math.floor(Math.random() * 7) + 2;
-    const rTimeMin = Math.floor(Math.random() * 61) + 5;
-    const rTimeMax = Math.floor(Math.random() * (61 - rTimeMin)) + rTimeMin;
+    const rNumPoints = Math.floor(Math.random() * 7) + 3;
+    const rTimeMin = Math.floor(Math.random() * 56) + 5; 
+    const rTimeMax = Math.floor(Math.random() * (61 - rTimeMin)) + rTimeMin; 
 
     setLatMin(rLatMin);
     setLatMax(rLatMax);
