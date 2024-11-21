@@ -1,3 +1,4 @@
+// דף הגרף שבו הלקוח יכול להגדיר נתונים לצורך מופע של גרף
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { format, set } from 'date-fns';
@@ -17,6 +18,7 @@ const RGraph = () => {
         const day = String(today.getDate()).padStart(2, "0");
         return `${year}-${month}-${day}`;
       };
+
     const [xMin, setXMin] = useState('');
     const [xMax, setXMax] = useState('');
     const [yMin, setYMin] = useState('');
@@ -36,6 +38,7 @@ const RGraph = () => {
     const GRAPH_SETTINGS_URI=process.env.REACT_APP_GRAPH_SETTINGS_URI;
     const GRAPH_REDIS_URI=process.env.REACT_APP_GRAPH_REDIS_URI;
     const GRAPH_MONGODB_URI=process.env.REACT_APP_GRAPH_MONGODB_URI;
+
     useEffect(() => {
         fetch('https://api.ipify.org?format=json')
           .then(response => response.json())

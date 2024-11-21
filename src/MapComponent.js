@@ -1,3 +1,5 @@
+//שירות האחראי על יצירה וניהול מופע של מפה
+
 import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -19,7 +21,6 @@ const MapComponent = ({ points }) => {
       }).addTo(mapInstance.current);
     }
 
-    // הוספת drawnItems למפה
     mapInstance.current.addLayer(drawnItemsRef.current);
 
     const customIcon = L.icon({
@@ -79,7 +80,7 @@ const MapComponent = ({ points }) => {
 
     mapInstance.current.on(L.Draw.Event.CREATED, (event) => {
       const layer = event.layer;
-      drawnItemsRef.current.addLayer(layer); // שימוש ב-drawnItemsRef
+      drawnItemsRef.current.addLayer(layer);
 
       if (layer instanceof L.Polygon) {
         const area = L.GeometryUtil.geodesicArea(layer.getLatLngs()[0]);

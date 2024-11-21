@@ -1,3 +1,5 @@
+// דף הגרף שבו הלקוח יכול להגדיר נתונים לצורך מופע של גרף
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { format } from 'date-fns';
