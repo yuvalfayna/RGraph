@@ -5,9 +5,7 @@ import { format, set } from 'date-fns';
 import { ScatterChart, Scatter, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import { Link } from 'react-router-dom';
 import styles from './RGraph.module.css';
-
-
-
+import { is } from 'date-fns/locale';
 
 const RGraph = () => {
 
@@ -34,7 +32,8 @@ const RGraph = () => {
     const [startDate, setStartDate] = useState(getCurrentDate());
     const [endDate, setEndDate] = useState(getCurrentDate());
     const [runtime, setRuntime] = useState(''); 
-    const [ipAddress, setIPAddress] = useState('')
+    const [ipAddress, setIPAddress] = useState('');
+    const [check, setCheck] = useState(false);
     const GRAPH_SETTINGS_URI=process.env.REACT_APP_GRAPH_SETTINGS_URI;
     const GRAPH_REDIS_URI=process.env.REACT_APP_GRAPH_REDIS_URI;
     const GRAPH_MONGODB_URI=process.env.REACT_APP_GRAPH_MONGODB_URI;
@@ -53,10 +52,21 @@ const RGraph = () => {
                     .map(item => ({ ...item, seconds: item.seconds - 1 }))
                     .filter(item => item.seconds > 0)
                     .sort((a, b) => b.seconds - a.seconds));
-        }, 1000);
-
+                    if(data.length===0&&check){
+                        axios.get(GRAPH_MONGODB_URI)
+                        .then((response) => {
+                            setEntities(response.data.entities);
+                            setCheck(false);
+                        })
+                        .catch((error) => {
+                            console.error('Error fetching entities:', error);
+                        });
+                    }
+        }, 1000);       
         return () => clearInterval(intervalId);
-    }, []);
+    });
+
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -129,7 +139,6 @@ const RGraph = () => {
                 ip: ipAddress
             });
             console.log('Response from backend:', response.data);
-
             setData([]);
         } catch (error) {
             console.error('Error posting data:', error);
@@ -145,18 +154,14 @@ const RGraph = () => {
                 .catch((error) => {
                     console.error('Error fetching data:', error);
                 });
+                setCheck(true);
         }
-            axios.get(GRAPH_MONGODB_URI)
-                .then((response) => {
-                    setEntities(response.data.entities);
-                })
-                .catch((error) => {
-                    console.error('Error fetching entities:', error);
-                });
+           
     };
 
     useEffect(() => {
         const fetchEntities = () => {
+            if(!check){
             axios.get(GRAPH_MONGODB_URI)
                 .then((response) => {
                     setEntities(response.data.entities);
@@ -164,13 +169,15 @@ const RGraph = () => {
                 .catch((error) => {
                     console.error('Error fetching entities:', error);
                 });
+            }
         };
 
+
         fetchEntities();
-        const intervalId = setInterval(fetchEntities, 2000);
+        const intervalId = setInterval(fetchEntities, 30000);
 
         return () => clearInterval(intervalId);
-    },[]);
+    },[check]);
 
     const fetchDataMongo = async (arr) => {
         setLoading(true);
@@ -233,6 +240,7 @@ const rowCountMessage = `Current Number of Points in The Graph: ${countRows()}`;
         setTimeMin(rTimeMin);
         setTimeMax(rTimeMax);
     };
+
     
 
       
@@ -276,7 +284,7 @@ const rowCountMessage = `Current Number of Points in The Graph: ${countRows()}`;
                     </form>
                 </div>
                 <div className={styles.scroll_container}>
-                <h2>Replay</h2>
+                <h2>Archive (MONGO)</h2>
                 <div className={styles.date_picker_container}>
                     <div>
                         <label>Start Date:</label>
@@ -319,7 +327,7 @@ const rowCountMessage = `Current Number of Points in The Graph: ${countRows()}`;
             </div>
             </div>
                 <div className={styles.data_table_container}>
-                    <h2>Live Data Table</h2>
+                    <h2>Live Data Table (Redis)</h2>
                     <h3 className={styles.current_number_points}>{rowCountMessage}</h3>
                     {loading ? (
                         <p>Loading data...</p>

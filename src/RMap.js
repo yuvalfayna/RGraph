@@ -35,7 +35,9 @@ const RMap = () => {
     const [startDate, setStartDate] = useState(getCurrentDate());
     const [endDate, setEndDate] = useState(getCurrentDate());
     const [runtime, setRuntime] = useState(''); 
-    const [ipAddress, setIPAddress] = useState('')
+    const [ipAddress, setIPAddress] = useState('');
+    const [check, setCheck] = useState(false);
+
     const MAP_SETTINGS_URI=process.env.REACT_APP_MAP_SETTINGS_URI;
     const MAP_REDIS_URI=process.env.REACT_APP_MAP_REDIS_URI;
     const MAP_MONGODB_URI=process.env.REACT_APP_MAP_MONGODB_URI;
@@ -47,18 +49,26 @@ const RMap = () => {
           .catch(error => console.log(error))
       }, []);
     
-    useEffect(() => {
+      useEffect(() => {
         const intervalId = setInterval(() => {
             setData(prevData =>
                 prevData
                     .map(item => ({ ...item, seconds: item.seconds - 1 }))
                     .filter(item => item.seconds > 0)
                     .sort((a, b) => b.seconds - a.seconds));
-        }, 1000);
-
+                    if(data.length===0&&check){
+                        axios.get(MAP_MONGODB_URI)
+                        .then((response) => {
+                            setEntities(response.data.entities);
+                            setCheck(false);
+                        })
+                        .catch((error) => {
+                            console.error('Error fetching entities:', error);
+                        });
+                    }
+        }, 1000);       
         return () => clearInterval(intervalId);
-    }, []);
-
+    });
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -122,7 +132,6 @@ const RMap = () => {
                 ip: ipAddress
             });
             console.log('Response from backend:', response.data);
-
             setData([]);
         } catch (error) {
             console.error('Error posting data:', error);
@@ -134,22 +143,19 @@ const RMap = () => {
                 .then((response) => {
                     setData(response.data.data);
                     setDataarr(response.data.jarrdata);
+
                 })
                 .catch((error) => {
                     console.error('Error fetching data:', error);
-                });
+                });                   
+                setCheck(true);
+
         }
-            axios.get(MAP_MONGODB_URI)
-                .then((response) => {
-                    setEntities(response.data.entities);
-                })
-                .catch((error) => {
-                    console.error('Error fetching entities:', error);
-                });
     };
 
     useEffect(() => {
         const fetchEntities = () => {
+            if(!check){
             axios.get(MAP_MONGODB_URI)
                 .then((response) => {
                     setEntities(response.data.entities);
@@ -157,12 +163,13 @@ const RMap = () => {
                 .catch((error) => {
                     console.error('Error fetching entities:', error);
                 });
+            }
         };
-
         fetchEntities();
-        const intervalId = setInterval(fetchEntities, 2000);
+        const intervalId = setInterval(fetchEntities, 30000);
+
         return () => clearInterval(intervalId);
-    },[]);
+    },[check]);
 
     const fetchDataMongo = async (arr) => {
         setLoading(true);
@@ -266,7 +273,7 @@ const rowCountMessage = `Current Number of Points in The Map: ${countRows()}`;
                 </div>
                 
                 <div className={styles.scroll_container}>
-                    <h2>Replay</h2>
+                    <h2>Replay (MONGO)</h2>
                     <div className={styles.date_picker_container}>
                         <div>
                             <label>Start Date:</label>
@@ -307,7 +314,7 @@ const rowCountMessage = `Current Number of Points in The Map: ${countRows()}`;
                 </div>
                 
                 <div className={styles.data_table_container}>
-                    <h2>Live Data Table</h2>
+                    <h2>Live Data Table (REDIS)</h2>
                     <h3 className={styles.current_number_points}>{rowCountMessage}</h3>
                     {loading ? (
                         <p>Loading data...</p>
