@@ -1,13 +1,13 @@
 // דף הגרף שבו הלקוח יכול להגדיר נתונים לצורך מופע של גרף
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { format, set } from 'date-fns';
+import { format } from 'date-fns';
 import { ScatterChart, Scatter, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import { Link } from 'react-router-dom';
 import styles from './RGraph.module.css';
-import { is } from 'date-fns/locale';
 
 const RGraph = () => {
+
 
     const getCurrentDate = () => {
         const today = new Date();
@@ -37,6 +37,8 @@ const RGraph = () => {
     const GRAPH_SETTINGS_URI=process.env.REACT_APP_GRAPH_SETTINGS_URI;
     const GRAPH_REDIS_URI=process.env.REACT_APP_GRAPH_REDIS_URI;
     const GRAPH_MONGODB_URI=process.env.REACT_APP_GRAPH_MONGODB_URI;
+
+
 
     useEffect(() => {
         fetch('https://api.ipify.org?format=json')
@@ -146,15 +148,18 @@ const RGraph = () => {
         } finally {
             setLoading(false);
             setRuntime(format(new Date(),'dd/MM/yyyy HH:mm:ss'));
-            axios.get(GRAPH_REDIS_URI)
-                .then((response) => {
-                    setData(response.data.data);
-                    setDataarr(response.data.jarrdata);
-                })
-                .catch((error) => {
-                    console.error('Error fetching data:', error);
-                });
-                setCheck(true);
+            await axios.post(GRAPH_REDIS_URI,{ipAddress})
+            .then(function (response){
+            let points =  JSON.parse(response.data[0]);
+            let data =  JSON.parse(response.data[1]);
+            setData(points);
+            setDataarr(data);
+            setCheck(true);
+            }).catch(function (error){
+                console.log(error);
+                setError(error);
+            });
+
         }
            
     };

@@ -137,19 +137,17 @@ const RMap = () => {
             console.error('Error posting data:', error);
             setError('Error posting data: ' + (error.response?.data || error.message));
         } finally {
-            setLoading(false);
-            setRuntime(format(new Date(),'dd/MM/yyyy HH:mm:ss'));
-            axios.get(MAP_REDIS_URI)
-                .then((response) => {
-                    setData(response.data.data);
-                    setDataarr(response.data.jarrdata);
-
-                })
-                .catch((error) => {
-                    console.error('Error fetching data:', error);
-                });                   
-                setCheck(true);
-
+            await axios.post(MAP_REDIS_URI,{ipAddress})
+            .then(function (response){
+            let points =  JSON.parse(response.data[0]);
+            let data =  JSON.parse(response.data[1]);
+            setData(points);
+            setDataarr(data);
+            setCheck(true);
+            }).catch(function (error){
+                console.log(error);
+                setError(error);
+            });
         }
     };
 
@@ -273,7 +271,7 @@ const rowCountMessage = `Current Number of Points in The Map: ${countRows()}`;
                 </div>
                 
                 <div className={styles.scroll_container}>
-                    <h2>Replay (MONGO)</h2>
+                    <h2>Archive (MONGO)</h2>
                     <div className={styles.date_picker_container}>
                         <div>
                             <label>Start Date:</label>
