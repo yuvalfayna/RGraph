@@ -34,9 +34,11 @@ const RGraph = () => {
     const [runtime, setRuntime] = useState(''); 
     const [ipAddress, setIPAddress] = useState('');
     const [check, setCheck] = useState(false);
+    const [check1, setCheck1] = useState(true);
     const GRAPH_SETTINGS_URI=process.env.REACT_APP_GRAPH_SETTINGS_URI;
     const GRAPH_REDIS_URI=process.env.REACT_APP_GRAPH_REDIS_URI;
     const GRAPH_MONGODB_URI=process.env.REACT_APP_GRAPH_MONGODB_URI;
+
 
 
 
@@ -54,15 +56,21 @@ const RGraph = () => {
                     .map(item => ({ ...item, seconds: item.seconds - 1 }))
                     .filter(item => item.seconds > 0)
                     .sort((a, b) => b.seconds - a.seconds));
-                    if(data.length===0&&check){
-                        axios.get(GRAPH_MONGODB_URI)
-                        .then((response) => {
-                            setEntities(response.data.entities);
-                            setCheck(false);
+                    if(data.length===0&&check&&check1){
+                        axios.post(GRAPH_MONGODB_URI)
+                        .then(function (response){
+                            let entities=response.data;
+                            setEntities(entities);
+                            setCheck1(false);
+                            setTimeout(() => {
+                                setCheck(false);
+                                setCheck1(true);
+                            },30000);
                         })
-                        .catch((error) => {
-                            console.error('Error fetching entities:', error);
-                        });
+                        .catch(function (error){
+                            console.log(error);
+                            setError(error);
+                });
                     }
         }, 1000);       
         return () => clearInterval(intervalId);
@@ -148,7 +156,7 @@ const RGraph = () => {
         } finally {
             setLoading(false);
             setRuntime(format(new Date(),'dd/MM/yyyy HH:mm:ss'));
-            await axios.post(GRAPH_REDIS_URI,{ipAddress})
+            await axios.post(GRAPH_REDIS_URI,{ip:ipAddress})
             .then(function (response){
             let points =  JSON.parse(response.data[0]);
             let data =  JSON.parse(response.data[1]);
@@ -167,19 +175,19 @@ const RGraph = () => {
     useEffect(() => {
         const fetchEntities = () => {
             if(!check){
-            axios.get(GRAPH_MONGODB_URI)
-                .then((response) => {
-                    setEntities(response.data.entities);
-                })
-                .catch((error) => {
-                    console.error('Error fetching entities:', error);
+                 axios.post(GRAPH_MONGODB_URI)
+                .then(function (response){
+                    let entities=response.data;
+                    setEntities(entities);
+                }).catch(function (error){
+                    console.log(error);
+                    setError(error);
                 });
             }
         };
-
-
         fetchEntities();
         const intervalId = setInterval(fetchEntities, 30000);
+        
 
         return () => clearInterval(intervalId);
     },[check]);
@@ -322,8 +330,6 @@ const rowCountMessage = `Current Number of Points in The Graph: ${countRows()}`;
                             fetchDataMongo(entity["array:"]);
                             setDataarr(JSON.parse(entity["data:"]));
                             setRuntime(entity["runtime:"]);
-                            
-
                         }}
                     >
                         {entity["runtime:"]}

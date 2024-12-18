@@ -37,6 +37,8 @@ const RMap = () => {
     const [runtime, setRuntime] = useState(''); 
     const [ipAddress, setIPAddress] = useState('');
     const [check, setCheck] = useState(false);
+    const [check1, setCheck1] = useState(true);
+    
 
     const MAP_SETTINGS_URI=process.env.REACT_APP_MAP_SETTINGS_URI;
     const MAP_REDIS_URI=process.env.REACT_APP_MAP_REDIS_URI;
@@ -56,17 +58,23 @@ const RMap = () => {
                     .map(item => ({ ...item, seconds: item.seconds - 1 }))
                     .filter(item => item.seconds > 0)
                     .sort((a, b) => b.seconds - a.seconds));
-                    if(data.length===0&&check){
-                        axios.get(MAP_MONGODB_URI)
-                        .then((response) => {
-                            setEntities(response.data.entities);
-                            setCheck(false);
+                    if(data.length===0&&check&&check1){
+                        axios.post(MAP_MONGODB_URI)
+                        .then(function (response){
+                            let entities=response.data;
+                            setEntities(entities);
+                            setCheck1(false);
+                            setTimeout(() => {
+                                setCheck(false);
+                                setCheck1(true);
+                            },30000);
                         })
-                        .catch((error) => {
-                            console.error('Error fetching entities:', error);
-                        });
+                        .catch(function (error){
+                            console.log(error);
+                            setError(error);
+                });
                     }
-        }, 1000);       
+        }, 1000);      
         return () => clearInterval(intervalId);
     });
     const handleSubmit = (e) => {
@@ -137,7 +145,9 @@ const RMap = () => {
             console.error('Error posting data:', error);
             setError('Error posting data: ' + (error.response?.data || error.message));
         } finally {
-            await axios.post(MAP_REDIS_URI,{ipAddress})
+            setLoading(false);
+            setRuntime(format(new Date(),'dd/MM/yyyy HH:mm:ss'));
+            await axios.post(MAP_REDIS_URI,{ip:ipAddress})
             .then(function (response){
             let points =  JSON.parse(response.data[0]);
             let data =  JSON.parse(response.data[1]);
@@ -154,12 +164,13 @@ const RMap = () => {
     useEffect(() => {
         const fetchEntities = () => {
             if(!check){
-            axios.get(MAP_MONGODB_URI)
-                .then((response) => {
-                    setEntities(response.data.entities);
-                })
-                .catch((error) => {
-                    console.error('Error fetching entities:', error);
+                axios.post(MAP_MONGODB_URI)
+                .then(function (response){
+                    let entities=response.data;
+                    setEntities(entities);
+                }).catch(function (error){
+                    console.log(error);
+                    setError(error);
                 });
             }
         };
