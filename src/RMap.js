@@ -38,6 +38,7 @@ const RMap = () => {
     const [ipAddress, setIPAddress] = useState('');
     const [check, setCheck] = useState(false);
     const [check1, setCheck1] = useState(true);
+    const [emptyarchive, setEmptyArchive] = useState(""); 
     
 
     const MAP_SETTINGS_URI=process.env.REACT_APP_MAP_SETTINGS_URI;
@@ -154,6 +155,9 @@ const RMap = () => {
             setData(points);
             setDataarr(data);
             setCheck(true);
+            if(!check1){
+                setCheck1(true);
+            }
             }).catch(function (error){
                 console.log(error);
                 setError(error);
@@ -241,6 +245,19 @@ const rowCountMessage = `Current Number of Points in The Map: ${countRows()}`;
       
         return isAfterStart && isBeforeEnd;
       });
+            const CheckEmptyArchive = (arr)=> {
+              if(entities.length>0){
+              if(arr.length===0){
+                setEmptyArchive("No data in the selected time period");
+            }else{
+                setEmptyArchive("");
+            }
+          }
+          }
+      
+          useEffect(() => {
+              CheckEmptyArchive(filteredEntities);
+            }, [filteredEntities]);
       
       return (
         <div className={styles.app_container}>
@@ -305,20 +322,22 @@ const rowCountMessage = `Current Number of Points in The Map: ${countRows()}`;
                     </div>
 
                     <div className={styles.entity_buttons_container}>
-                        {filteredEntities.map((entity) => (
-                            <button
-                                key={entity._id}
-                                disabled={isLocked}
-                                className={styles.entity_item}
-                                onClick={() => {
-                                    fetchDataMongo(entity["map:"]);
-                                    setDataarr(JSON.parse(entity["data:"]));
-                                    setRuntime(entity["runtime:"]);
-                                }}
-                            >
-                                {entity["runtime:"]}
-                            </button>
-                        ))}
+                    <p>{emptyarchive}</p>
+                {filteredEntities.map((entity) => (
+                    <button
+                        key={entity._id}
+                        disabled={isLocked}
+                        className={styles.entity_item}
+                        onClick={() => {
+                            console.log(entities);
+                            fetchDataMongo(entity["map:"]);
+                            setDataarr(JSON.parse(entity["data:"]));
+                            setRuntime(entity["runtime:"]);
+                        }}
+                    >
+                        {entity["runtime:"]}
+                    </button>
+                ))}
                     </div>
                 </div>
                 

@@ -5,7 +5,6 @@ import { format } from 'date-fns';
 import { ScatterChart, Scatter, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import { Link } from 'react-router-dom';
 import styles from './RGraph.module.css';
-
 const RGraph = () => {
 
 
@@ -35,6 +34,9 @@ const RGraph = () => {
     const [ipAddress, setIPAddress] = useState('');
     const [check, setCheck] = useState(false);
     const [check1, setCheck1] = useState(true);
+    const [emptyarchive, setEmptyArchive] = useState(""); 
+
+
     const GRAPH_SETTINGS_URI=process.env.REACT_APP_GRAPH_SETTINGS_URI;
     const GRAPH_REDIS_URI=process.env.REACT_APP_GRAPH_REDIS_URI;
     const GRAPH_MONGODB_URI=process.env.REACT_APP_GRAPH_MONGODB_URI;
@@ -163,6 +165,9 @@ const RGraph = () => {
             setData(points);
             setDataarr(data);
             setCheck(true);
+            if(!check1){
+                setCheck1(true);
+            }
             }).catch(function (error){
                 console.log(error);
                 setError(error);
@@ -232,9 +237,24 @@ const rowCountMessage = `Current Number of Points in The Graph: ${countRows()}`;
       
         const isAfterStart = !selectedStartDate || entityDate.getTime() >= selectedStartDate.getTime();
         const isBeforeEnd = !selectedEndDate || entityDate.getTime() <= selectedEndDate.getTime();
-      
+
         return isAfterStart && isBeforeEnd;
+        
       });
+
+      const CheckEmptyArchive = (arr)=> {
+        if(entities.length>0){
+        if(arr.length===0){
+          setEmptyArchive("No data in the selected time period");
+      }else{
+          setEmptyArchive("");
+      }
+    }
+    }
+
+    useEffect(() => {
+        CheckEmptyArchive(filteredEntities);
+      }, [filteredEntities]);
       
       const Randomizer = () => {
         const rXMin = Math.floor(Math.random() * 91);
@@ -321,7 +341,8 @@ const rowCountMessage = `Current Number of Points in The Graph: ${countRows()}`;
           
 
             <div className={styles.entity_buttons_container}>
-                {filteredEntities.map((entity) => (
+            <p>{emptyarchive}</p>
+               {filteredEntities.map((entity) => (
                     <button
                         key={entity._id}
                         disabled={isLocked}

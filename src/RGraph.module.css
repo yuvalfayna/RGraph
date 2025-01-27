@@ -362,13 +362,13 @@ button:hover {
   background-color: #0056b3;
 }
 .entity_buttons_container {
-  min-width: 270px; /* Set a minimum width to make them bigger */
-  height: 330px; /* גובה קבוע */
-  border: 1px solid #ccc; /* גבול */
-  padding: 10px; /* ריפוד פנימי */
+  min-width: 270px;
+  height: 330px; 
+  border: 1px solid #ccc; 
+  padding: 10px; 
   margin-left: -20px;
-  background-color: white; /* צבע רקע */
-  border-radius: 10px; /* פינות מעוגלות */
-  margin-top: 35px; /* רווח בין הקונטיינרים */
+  background-color: white; 
+  border-radius: 10px; 
+  margin-top: 35px; 
   overflow-y: auto;
 }
