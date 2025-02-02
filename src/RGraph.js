@@ -200,16 +200,9 @@ const RGraph = () => {
     const fetchDataMongo = async (arr) => {
         setLoading(true);
         setError('')
-        const parsedArray = JSON.parse(arr);
-        const data = parsedArray.map(item => ({
-            x: item[0],
-            y: item[1],
-            seconds: item[2]
-        }
-        
-    ))
-    setLoading(false);
-    setData(data);
+        let points =  JSON.parse(arr);
+        setLoading(false);
+        setData(points);
 };
 const countRows = () => {
     return data.length;
