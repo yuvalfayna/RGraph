@@ -24,7 +24,7 @@ const MapComponent = ({ points }) => {
     mapInstance.current.addLayer(drawnItemsRef.current);
 
     const customIcon = L.icon({
-      iconUrl: 'https://uxwing.com/wp-content/themes/uxwing/download/location-travel-map/map-pin-icon.png',
+      iconUrl: 'https://rgraph.ndr.cl/map-pin-icon.png',
       className: 'custom-icon',
       iconSize: [25, 25],
       iconAnchor: [12, 41],
